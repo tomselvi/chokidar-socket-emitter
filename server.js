@@ -35,9 +35,11 @@ module.exports = (opts, cb) => {
     // Ignore relative, top-level dotfiles as well (e.g. '.gitignore').
     /^\.[^\/\\]/,
     'node_modules/**',
-    (baseURL ? baseURL + '/' : '') + 'jspm_packages/**',
     '.git/**'
   ]
+  if (!opts.watchJspm) {
+    ignoredPaths.push((baseURL ? baseURL + '/' : '') + 'jspm_packages/**')
+  }
   let chokidarOpts = Object.assign({
     ignored: ignoredPaths,
     ignoreInitial: true
