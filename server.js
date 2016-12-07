@@ -54,8 +54,10 @@ module.exports = (opts, cb) => {
     }
     if (path.sep === '\\') {
       onPath = onPath.replace(/\\/g, '/')
-    } else {
-
+    } else if (opts.proxy) {
+      Object.keys(opts.proxy).forEach((key) => {
+        onPath = onPath.replace(key, opts.proxy[key])
+      })
     }
     console.log('File ', onPath, ' emitted: ' + event)
     socketsConnected.forEach((socket) => {
